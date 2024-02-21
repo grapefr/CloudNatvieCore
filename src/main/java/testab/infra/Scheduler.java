@@ -3,22 +3,17 @@ package testab.infra;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javafx.application.Application;
 import testab.domain.Approved;
 import testab.domain.Core;
 import testab.domain.CoreRepository;
 
 import java.util.List;
 import java.util.Optional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Component
 public class Scheduler {
   
-  private static final Logger logger = LoggerFactory.getLogger(Application.class);
   private final CoreRepository coreRepository;
   private final ModelClient modelClient;
 
@@ -39,7 +34,6 @@ public class Scheduler {
       System.out.println("############ OK GO :  " + System.currentTimeMillis());
       for( int i = 0; i < optionalCore.size(); i++ ){
         Core core = optionalCore.get(i);
-        logger.debug("################## scheduler core 확인 : {} ", core);
 
         try {
           Thread.sleep(1000); // 1초 대기
@@ -65,7 +59,6 @@ public class Scheduler {
           core.setState("targetCompleted");
         }        
         coreRepository.save(core);
-        logger.debug("################## updated {} ", core );
       }
     }
 
