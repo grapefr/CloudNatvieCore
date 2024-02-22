@@ -86,3 +86,9 @@ spring:
 models:
   ribbon:
     listOfServers: http://gateway:8080
+logging:
+  file:
+    name: /data/app.log
+  level:
+    org.hibernate.type: ${HYBERNATE_TYPE:trace}
+    org.springframework.cloud: ${LOG_LEVEL:error}
