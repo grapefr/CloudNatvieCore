@@ -5,9 +5,9 @@ spring:
   application:
     name: core
 ---
-
 spring:
   profiles: default
+  model: localhost:8088
   jpa:
     properties:
       hibernate:
@@ -30,14 +30,14 @@ spring:
       bindings:
         event-in:
           group: core
-#<<< EDA / Topic Name
+          #<<< EDA / Topic Name
           destination: testab
-#>>> EDA / Topic Name
+          #>>> EDA / Topic Name
           contentType: application/json
         event-out:
-#<<< EDA / Topic Name
+          #<<< EDA / Topic Name
           destination: testab
-#>>> EDA / Topic Name
+          #>>> EDA / Topic Name
           contentType: application/json
 
 logging:
@@ -45,14 +45,17 @@ logging:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 
-
 server:
   port: 8084
 
----
+models:
+  ribbon:
+    listOfServers: http://localhost:8088
 
+---
 spring:
   profiles: docker
+  model: gateway:8080
   jpa:
     properties:
       hibernate:
@@ -80,5 +83,6 @@ spring:
         event-out:
           destination: testab
           contentType: application/json
-
-
+models:
+  ribbon:
+    listOfServers: http://gateway:8080
